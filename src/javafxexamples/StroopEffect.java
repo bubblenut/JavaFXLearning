@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class StroopEffect extends Application {
     @Override
     public void start(Stage primaryStage) {
@@ -30,11 +32,12 @@ public class StroopEffect extends Application {
     private Parent createInterface() {
 
         Button button = new Button("Добавить");
-        button.setPrefSize(160,40);
-        button.setMinSize(160, 40);
+        button.setPrefSize(160,50);
+        button.setMinSize(160, 50);
 
         Label[] labels = new Label[]{new Label("Синий"), new Label("Желтый"), new Label("Фиолетвый"), new Label("Черный")};
         Rectangle[] rectangles = new Rectangle[]{new Rectangle(228, 28), new Rectangle(228, 28)};
+
 
         labels[0].setTextFill(Color.PURPLE);
         labels[1].setTextFill(Color.GREEN);
@@ -68,6 +71,35 @@ public class StroopEffect extends Application {
                 rectangles[1]
         );
 
+
+        // Вторая задача
+        Color[] palette = new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.CYAN, Color.VIOLET, Color.BLACK};
+        String[] words = new String[]{"Красный", "Оранжевый", "Желтый", "Зеленый", "Голубой", "СИНИй", "Фиолетовый", "Черный"};
+
+        Random randomize = new Random();
+
+        button.addEventHandler(ActionEvent.ACTION, actionEvent -> {
+
+            boolean isRect = randomize.nextBoolean();
+
+            Color randomColor = palette[randomize.nextInt(8)];
+
+            if(isRect){
+                Rectangle newRect = new Rectangle(228, 28);
+                newRect.setFill(randomColor);
+                vb1.getChildren().add(newRect);
+            }else{
+                String randomWord = words[randomize.nextInt(8)];
+                Label newText = new Label(randomWord);
+                newText.setTextFill(randomColor);
+                vb1.getChildren().add(newText);
+            }
+
+            if(vb1.getChildren().size() == 11){
+                vb1.getChildren().remove(0);
+            }
+
+        });
 
         return grid;
     }
